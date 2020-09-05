@@ -16,9 +16,8 @@ part 'note_actor_bloc.freezed.dart';
 class NoteActorBloc extends Bloc<NoteActorEvent, NoteActorState> {
   final NoteRepositoryInterface _repositoryInterface;
 
-  NoteActorBloc(this._repositoryInterface);
-  @override
-  NoteActorState get initialState => const NoteActorState.initial();
+  NoteActorBloc(this._repositoryInterface)
+      : super(const NoteActorState.initial());
 
   @override
   Stream<NoteActorState> mapEventToState(

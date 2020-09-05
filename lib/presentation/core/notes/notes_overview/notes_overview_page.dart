@@ -2,12 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/application/auth/auth_bloc.dart';
-import 'package:note/application/notes/note_actor/note_actor_bloc.dart';
-import 'package:note/application/notes/note_watcher/note_watcher_bloc.dart';
-import 'package:note/injection.dart';
-import 'package:note/presentation/core/notes/notes_overview/widgets/notes_overview_body.dart';
-import 'package:note/presentation/core/routes/router.gr.dart';
+
+import '../../../../application/auth/auth_bloc.dart';
+import '../../../../application/notes/note_actor/note_actor_bloc.dart';
+import '../../../../application/notes/note_watcher/note_watcher_bloc.dart';
+import '../../../../injection.dart';
+import '../../routes/router.gr.dart';
+import 'widgets/notes_overview_body.dart';
 
 class NotesOverviewPage extends StatelessWidget {
   @override
@@ -24,8 +25,8 @@ class NotesOverviewPage extends StatelessWidget {
           BlocListener<AuthBloc, AuthState>(listener: (context, state) {
             state.maybeMap(
                 orElse: () {},
-                unauthenticated: (_) => ExtendedNavigator.of(context)
-                    .pushReplacementNamed(Routes.signInPage));
+                unauthenticated: (_) =>
+                    ExtendedNavigator.of(context).replace(Routes.signInPage));
           }),
           BlocListener<NoteActorBloc, NoteActorState>(
               listener: (context, state) {
@@ -69,7 +70,9 @@ class NotesOverviewPage extends StatelessWidget {
           ),
           body: NotesOverviewBody(),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              ExtendedNavigator.of(context).pushNoteFormPage(editedNote: null);
+            },
             child: Icon(Icons.add),
           ),
         ),

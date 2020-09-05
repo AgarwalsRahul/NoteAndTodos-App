@@ -17,9 +17,7 @@ part 'sign_in_form_bloc.freezed.dart';
 class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
   final AuthFacade authFacade;
 
-  SignInFormBloc(this.authFacade);
-  @override
-  SignInFormState get initialState => SignInFormState.initial();
+  SignInFormBloc(this.authFacade) : super(SignInFormState.initial());
 
   @override
   Stream<SignInFormState> mapEventToState(
@@ -39,7 +37,8 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
         );
       },
       registerWithEmaiAndPasswordPressed: (e) async* {
-       yield* _registerAndSignInAction(authFacade.registerWithEmailAndPassword);
+        yield* _registerAndSignInAction(
+            authFacade.registerWithEmailAndPassword);
       },
       signInWithEmaiAndPasswordPressed: (e) async* {
         yield* _registerAndSignInAction(authFacade.signInWithEmailAndPassword);
@@ -59,7 +58,8 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
       Future<Either<AuthFailures, Unit>> Function({
     @required EmailAddress email,
     @required Password password,
-  }) forwardedCall) async* {
+  })
+          forwardedCall) async* {
     Either<AuthFailures, Unit> successOrFailure;
     final isEmailValid = state.emailAddress.isValid();
     final isPasswordValid = state.password.isValid();

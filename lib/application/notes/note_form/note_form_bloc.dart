@@ -23,9 +23,7 @@ part 'note_form_state.dart';
 class NoteFormBloc extends Bloc<NoteFormEvent, NoteFormState> {
   final NoteRepositoryInterface _repositoryInterface;
 
-  NoteFormBloc(this._repositoryInterface);
-  @override
-  NoteFormState get initialState => NoteFormState.initial();
+  NoteFormBloc(this._repositoryInterface) : super(NoteFormState.initial());
 
   @override
   Stream<NoteFormState> mapEventToState(
@@ -70,7 +68,7 @@ class NoteFormBloc extends Bloc<NoteFormEvent, NoteFormState> {
         );
       },
       initialized: (e) async* {
-        e.note.fold(
+        yield e.note.fold(
           () => state,
           (initialNote) => state.copyWith(
             note: initialNote,
